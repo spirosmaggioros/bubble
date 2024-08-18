@@ -1,4 +1,3 @@
-#define CATCH_CONFIG_MAIN
 #include "../tools/catch.hpp"
 #include "../src/bubble.h"
 #include <string>
