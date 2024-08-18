@@ -6,7 +6,8 @@ an initial size(like bubble<int, 5>) and once the array of size=5 is full, then 
 are going to be inserted inside avl trees.
 The code is header-only and only relies on STL, except from the avl_tree.hpp header that is implemented inside the
 ```src/``` folder, though you can just put it inside the ```bubble.h``` file and be just fine.
-Note that you can put any binary tree structure you like instead of an avl tree, bubble is generic.
+Note that you can put any binary tree structure you like instead of an avl tree, bubble is generic. \
+You can check more about the container at the [tutorial](/tutorial) folder
 
 ## Complexity
 The time complexity of insertion, deletion and searching of an element is $O(logn \cdot logm)$ where m is the
