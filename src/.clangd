@@ -1,0 +1,14 @@
+If:
+  PathMatch: .*\.cc
+
+CompileFlags:
+  Add: [-std=c++23]
+
+---
+
+If:
+  PathMatch: .*\.h
+
+CompileFlags:
+  Add: [-std=c++23]
+
