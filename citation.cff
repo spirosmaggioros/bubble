@@ -1,7 +1,10 @@
-@software{bubble
-  author = {Spiros Maggioros},
-  title = {{bubble: A new data structure based on the idea of fibonacci heaps}},
-  url = {https://github.com/spirosmaggioros/bubble},
-  version = {0.0.1},
-  year = {2024}
-}
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Spiros"
+  given-names: "Maggioros"
+  orcid: "https://orcid.org/0009-0002-0208-4749"
+title: "bubble: A new data structure based on the idea of fibonacci heaps"
+version: 0.0.1
+date-released: 2024-08-18
+url: "https://github.com/spirosmaggioros/bubble"
