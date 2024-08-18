@@ -34,7 +34,7 @@ endif()
 
 # Collect all source files and headers
 file(GLOB_RECURSE ALL_CXX_SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/*.cc")
-file(GLOB_RECURSE ALL_HEADER_FILES "${CMAKE_SOURCE_DIR}/src/*.hpp")
+file(GLOB_RECURSE ALL_HEADER_FILES "${CMAKE_SOURCE_DIR}/src/*.h")
 
 # Combine all source and header files into a single list
 list(APPEND ALL_FILES ${ALL_CXX_SOURCE_FILES})
@@ -57,4 +57,3 @@ endif()
 enable_testing()
 
 add_subdirectory(tests)
-

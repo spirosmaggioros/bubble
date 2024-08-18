@@ -1,5 +1,5 @@
 #include "../tools/catch.hpp"
-#include "../src/bubble.hpp"
+#include "../src/bubble.h"
 #include <string>
 #include <cmath>
 
@@ -91,4 +91,3 @@ TEST_CASE("Testing operator << for bubble class") {
     b2.insert("hello there", "we", "are", "csrt team", "yay!!");
     CHECK_NOTHROW(std::cout << b2 << '\n');
 }
-

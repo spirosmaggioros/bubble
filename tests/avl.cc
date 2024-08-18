@@ -1,4 +1,4 @@
-#include "../src/avl_tree.hpp"
+#include "../src/avl_tree.h"
 #include "../tools/catch.hpp"
 #include <string>
 

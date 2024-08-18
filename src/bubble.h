@@ -17,7 +17,7 @@
 #include <algorithm>
 #include <utility>
 #include <cassert>
-#include "avl_tree.hpp"
+#include "avl_tree.h"
 #endif
 
 /**
