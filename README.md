@@ -1,4 +1,4 @@
-### bubble: A new data structure based on the idea of fibonacci heaps, but works in practice
+### bubble: A new data structure based on the idea of fibonacci heaps
 
 ## Overiew
 bubble is a data structure that uses an array and avl trees to store elements. You have to define
