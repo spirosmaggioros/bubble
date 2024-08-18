@@ -38,15 +38,15 @@ Permission is granted, free of charge, to any person obtaining a copy of this so
 documentation files. \
 Please cite the creators if you want to include this code to a project or a product
 ```
-@software{bubble
-  author = {Spiros Maggioros},
-  title = {{bubble: A new data structure based on the idea of fibonacci heaps}},
-  url = {https://github.com/spirosmaggioros/bubble},
-  version = {0.0.1},
-  year = {2024}
+@software{Spiros_bubble_A_new_2024,
+author = {Spiros, Maggioros},
+month = aug,
+title = {{bubble: A new data structure based on the idea of fibonacci heaps}},
+url = {https://github.com/spirosmaggioros/bubble},
+version = {0.0.1},
+year = {2024}
 }
 ```
-Or look at bibitex.
 
 
 ## Run unit tests
