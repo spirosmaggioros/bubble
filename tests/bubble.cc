@@ -12,6 +12,11 @@ TEST_CASE("Testing insertion for bubble class") {
     REQUIRE(b[2][0] == 10);
     REQUIRE(b[3][0] == 40);
     REQUIRE(b[4][0] == 50);
+
+    b.insert(-15, -20, -50, -60, -100, -150, -200);
+    REQUIRE(b.search(-15) == true);
+    REQUIRE(b.search(-50) == true);
+    REQUIRE(b.search(-10) == true);
 }
 
 TEST_CASE("Testing searching for bubble class") {
@@ -168,4 +173,24 @@ TEST_CASE("Testing operator = for bubble class [2]") {
 
     bubble<int, 6> w = b;
     REQUIRE(w.array_size() == 6);
+}
+
+TEST_CASE("Testing get_tree with std::nullopt") {
+    bubble<int, 5> b;
+    b.insert(-10, 20, 50, 60, 100);
+    avl_tree<int> empty;
+    avl_tree<int> b_tree { b.get_tree(0) };
+    REQUIRE(empty.inorder() == b_tree.inorder());
+}
+
+TEST_CASE("Testing removing element that does not exist") {
+    bubble<int, 5> b;
+    b.insert(-10, 20, 50, 60, 100);
+    bubble<int, 5> b2 = b;
+    CHECK_NOTHROW(b.remove(55));
+    CHECK_NOTHROW(b.remove(-100));
+    CHECK_NOTHROW(b.remove(150));
+    for(int i = 0; i<b.array_size(); i++){
+        REQUIRE(b[i] == b2[i]);
+    }
 }

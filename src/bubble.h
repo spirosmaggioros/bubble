@@ -144,7 +144,7 @@ public:
     * @return std::vector<T>: the elements in-order of the passed index
     */
     std::vector<T> operator[] (const size_t& index) const {
-        assert(index < this->_size && index >= 0);
+        assert(index < _SIZE && index >= 0);
         if(this->list[index].second == std::nullopt) { return {this->list[index].first}; }
         return this->list[index].second.value().inorder();
     }
