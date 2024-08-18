@@ -91,3 +91,50 @@ TEST_CASE("Testing operator << for bubble class") {
     b2.insert("hello there", "we", "are", "csrt team", "yay!!");
     CHECK_NOTHROW(std::cout << b2 << '\n');
 }
+
+TEST_CASE("Testing operator = for bubble class") {
+    bubble<std::string, 5> b;
+    b.insert("a", "f", "m", "s", "y");
+    bubble<std::string, 5> b2 = b;
+    for(int i = 0; i<5; i++){
+        REQUIRE(b[i] == b2[i]);
+    }
+    bubble<std::string, 6> b3 = b;
+    REQUIRE(b3.array_size() == 6);
+}
+
+TEST_CASE("Testing copy constructor for bubble class") {
+    bubble<int, 5> b;
+    b.insert(-10, 20, 50, 100, 200);
+    b.insert(150, 25, 55, 34, -100, 500);
+    bubble<int, 5> b2(b);
+    for(int i = 0; i<b.array_size(); i++){
+        REQUIRE(b[i] == b2[i]);
+    }
+
+    bubble<int, 6> b3(b);
+    REQUIRE(b3.size() == 0);
+}
+
+TEST_CASE("Testing get_key function for bubble class") {
+    bubble<int, 5> b;
+    b.insert(-10, 20, 50, 60, 100);
+    REQUIRE(b.get_key(0) == -10);
+    REQUIRE(b.get_key(3) == 60);
+
+    bubble<std::string, 5> b2;
+    b2.insert("a", "e", "l", "t", "y");
+    REQUIRE(b2.get_key(0) == "a");
+    REQUIRE(b2.get_key(2) == "l");
+}
+
+TEST_CASE("Testing get_tree function for bubble class") {
+    bubble<int, 5> b;
+    b.insert(-10, 20, 50, 60, 100);
+    b.insert(-15, -25, -35, -45);
+    avl_tree<int> a({-15, -25, -35, -45});
+    avl_tree<int> b_tree = b.get_tree(0);
+    std::vector check1 { a.inorder() };
+    std::vector check2 { b_tree.inorder() };
+    REQUIRE(check1 == check2);
+}

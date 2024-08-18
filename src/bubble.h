@@ -40,14 +40,45 @@ public:
     * @param t: const& bubble<T, _NEW_SIZE>: the new bubble
     */
     template <size_t _NEW_SIZE>
-    bubble(const bubble<T, _NEW_SIZE> &t) noexcept : _size(t._size) {
+    bubble(const bubble<T, _NEW_SIZE> &t) : _size(0) {
         try {
-            if(_NEW_SIZE != _SIZE) { throw std::logic_error("Tried to copy bubbles with different sizes"); }
-            this->list = t.list;
+            if(_NEW_SIZE != _SIZE) {
+                throw std::logic_error("Tried to copy bubbles with different sizes");
+                return;
+            }
+            this->_size = t.size();
+            this->list = {};
+            for(size_t i = 0; i<this->_size; i++){
+                this->list.push_back(std::pair<T, std::optional<avl_tree<T>>>(t.get_key(i), t.get_tree(i)));
+            }
         }
         catch (std::logic_error &e){
             std::cerr << e.what() << '\n';
         }
+    }
+
+    /**
+    * @brief operator = for bubble class
+    * @param t: const& bubble<T, _NEW_SIZE> the new bubble
+    * @return: const bubble
+    */
+    template <size_t _NEW_SIZE>
+    const bubble operator =(bubble<T, _NEW_SIZE> &t) {
+        try{
+            if(_NEW_SIZE != _SIZE) {
+                throw std::logic_error("Tried to copy two bubbles with different sizes");
+            }
+        }
+        catch (std::logic_error &e) {
+            std::cerr << e.what() << '\n';
+            return *(this);
+        }
+        this->_size = t.size();
+        this->list = {};
+        for(size_t i = 0; i<this->_size; i++){
+            this->list.push_back(std::pair<T, std::optional<avl_tree<T>>>(t.get_key(i), t.get_tree(i)));
+        }
+        return *(this);
     }
 
     /**
@@ -75,21 +106,41 @@ public:
     bool search(const T& key);
 
     /**
+    * @brief get_key function
+    * @param index: const size_t& the index
+    * @return T: the element of the array in that index
+    */
+    T get_key(const size_t& index) const;
+
+    /**
+    * @brief get_tree function
+    * @param index: const size_t& the index
+    * @return avl_tree<T>: the AVL Tree in that index
+    */
+    avl_tree<T> get_tree(const size_t& index) const;
+
+    /**
     * @brief size function for bubble
     * @return size_t: the size of the bubble
     */
-    size_t size();
+    size_t size() const;
+
+    /**
+    * @brief array_size function for bubble
+    * @return size_t: the size of the array
+    */
+    size_t array_size() const;
 
     /**
     * @brief empty function for bubble
     * @return true: if bubble is empty
     * @return false: otherwise
     */
-    bool empty();
+    bool empty() const;
 
     /**
     * @brief operator [] for bubble
-    * @param index: const& size_t, the passed index value
+    * @param index: const size_t&, the passed index value
     * @return std::vector<T>: the elements in-order of the passed index
     */
     std::vector<T> operator[] (const size_t& index) const {
@@ -130,12 +181,12 @@ template <typename... Args>
 inline void bubble<T, _SIZE>::insert(Args ...keys) {
     auto _insert = [&](const T&& key) -> void {
         if(_size < _SIZE) {
-            list.push_back({key, std::nullopt});
+            this->list.push_back({key, std::nullopt});
             _size++;
             return;
         }
         if(_size == _SIZE) {
-            std::ranges::sort(list, [](const std::pair<T, std::optional<avl_tree<T>>> &a, const std::pair<T, std::optional<avl_tree<T>>> &b){
+            std::ranges::sort(this->list, [](const std::pair<T, std::optional<avl_tree<T>>> &a, const std::pair<T, std::optional<avl_tree<T>>> &b){
                 return a.first < b.first;
             });
         }
@@ -247,13 +298,33 @@ bool bubble<T, _SIZE>::search(const T& key) {
 }
 
 template <typename T, size_t _SIZE>
-size_t bubble<T, _SIZE>::size() {
+T bubble<T, _SIZE>::get_key(const size_t &index) const {
+    assert(index >=0 && index < _SIZE);
+    return this->list[index].first;
+}
+
+template <typename T, size_t _SIZE>
+avl_tree<T> bubble<T, _SIZE>::get_tree(const size_t &index) const {
+    assert(index >=0 && index < _SIZE);
+    if(this->list[index].second == std::nullopt) {
+        return avl_tree<T>();
+    }
+    return avl_tree<T>(this->list[index].second.value());
+}
+
+template <typename T, size_t _SIZE>
+size_t bubble<T, _SIZE>::size() const {
     return this->_size;
 }
 
 template <typename T, size_t _SIZE>
-bool bubble<T, _SIZE>::empty() {
+bool bubble<T, _SIZE>::empty() const {
     return this->_size == 0;
+}
+
+template <typename T, size_t _SIZE>
+size_t bubble<T, _SIZE>::array_size() const {
+    return _SIZE;
 }
 
 #endif

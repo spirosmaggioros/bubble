@@ -7,7 +7,7 @@ CompileFlags:
 ---
 
 If:
-  PathMatch: .*\.hpp
+  PathMatch: .*\.h
 
 CompileFlags:
   Add: [-std=c++23]
