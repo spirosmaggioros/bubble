@@ -5,7 +5,7 @@ bubble is a data structure that uses an array and avl trees to store elements. Y
 an initial size(like bubble<int, 5>) and once the array of size=5 is full, then the next elements
 are going to be inserted inside avl trees.
 The code is header-only and only relies on STL, except from the avl_tree.hpp header that is implemented inside the
-```src/``` folder, though you can just put it inside the ```bubble.hpp``` file and be just fine.
+```src/``` folder, though you can just put it inside the ```bubble.h``` file and be just fine.
 Note that you can put any binary tree structure you like instead of an avl tree, bubble is generic.
 
 ## Complexity
@@ -14,7 +14,7 @@ initial array size and m is the size of the avl tree that the key is going to be
 
 ## Example
 ```cpp
-#include "src/bubble.hpp"
+#include "src/bubble.h"
 
 int main() {
     bubble<int, 5> b;
