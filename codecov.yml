@@ -21,4 +21,5 @@ comment:
 
 ignore:
   - "tools/catch.hpp"
+  - "src/avl_tree.h"
   - "tutorial/*.pdf"

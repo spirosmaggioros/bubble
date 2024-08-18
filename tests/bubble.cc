@@ -1,3 +1,4 @@
+#define CATCH_CONFIG_MAIN
 #include "../tools/catch.hpp"
 #include "../src/bubble.h"
 #include <string>
@@ -33,6 +34,15 @@ TEST_CASE("Testing searching for bubble class") {
     REQUIRE(b.search("before") == false);
     b.remove("c");
     REQUIRE(b.search("c") == false);
+    REQUIRE(b.search("y") == true);
+    b.insert("z");
+    REQUIRE(b.search("z") == true);
+    b.remove("z");
+    REQUIRE(b.search("z") == false);
+    b.insert("0");
+    REQUIRE(b.search("0") == true);
+    b.remove("0");
+    REQUIRE(b.search("0") == false);
 }
 
 TEST_CASE("Testing removing for bubble class") {
@@ -92,7 +102,7 @@ TEST_CASE("Testing operator << for bubble class") {
     CHECK_NOTHROW(std::cout << b2 << '\n');
 }
 
-TEST_CASE("Testing operator = for bubble class") {
+TEST_CASE("Testing operator = for bubble class [1]") {
     bubble<std::string, 5> b;
     b.insert("a", "f", "m", "s", "y");
     bubble<std::string, 5> b2 = b;
@@ -137,4 +147,26 @@ TEST_CASE("Testing get_tree function for bubble class") {
     std::vector check1 { a.inorder() };
     std::vector check2 { b_tree.inorder() };
     REQUIRE(check1 == check2);
+}
+
+TEST_CASE("Testing operator = for bubble class [2]") {
+    bubble<int, 5> b;
+    b.insert(-10, 20, 50, 60, 100);
+    b.insert(-15, -25, -35, -45);
+
+    bubble<int, 5> b2 = b;
+    for(int i = 0; i<b.array_size(); i++){
+        REQUIRE(b.get_key(i) == b2.get_key(i));
+        REQUIRE(b[i] == b2[i]);
+    }
+
+    bubble<char, 5> b3;
+    b3.insert('a', 'e', 'l', 't', 'y');
+    bubble<char, 5> b4 = b3;
+    for(int i = 0; i<b3.array_size(); i++){
+        REQUIRE(b3.get_key(i) == b4.get_key(i));
+    }
+
+    bubble<int, 6> w = b;
+    REQUIRE(w.array_size() == 6);
 }
