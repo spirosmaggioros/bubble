@@ -1,0 +1,8 @@
+@software{bubble
+  author = {Spiros Maggioros},
+  month = {8},
+  title = {{bubble: A new data structure based on the idea of fibonacci heaps}},
+  url = {https://github.com/spirosmaggioros/bubble},
+  version = {0.0.1},
+  year = {2024}
+}
