@@ -1,8 +1,9 @@
 /**
-* This is the bubble data structure, we highly suggest to initialize it with a various range of elements
-* like {-500, -100, 0, 100, 500}(for _SIZE=5) if you want to use elements from [-500, 500]. In the future, we will
-* work on making it more generic and make the list change, for example, if the user give {-2, -1, 0, 1, 2} and always
-* insert keys with value > 2, then bubble will not work efficiently, so this has to change in the future
+* @brief Implementation of the bubble data structure, a data structure that is highly influenced
+* from the fibonacci heap structure. Bubble uses an array and avl_trees to store elements and
+* fastly retreieve or insert new ones. Insertion/removal time complexity is O(logn*logm) where n
+* is the size of the initial array(or the input bubble size) and m is the number of nodes at the index
+* that the bubble is going to search
 */
 
 #ifndef BUBBLE_H
@@ -19,6 +20,9 @@
 #include "avl_tree.hpp"
 #endif
 
+/**
+* @brief implementation of bubble<T, SIZE>
+*/
 template <typename T, size_t _SIZE>
 class bubble {
 private:
@@ -26,8 +30,15 @@ private:
     size_t _size;
 
 public:
+    /**
+    * @brief default constructor of bubble
+    */
     explicit bubble() noexcept : _size(0) { }
 
+    /**
+    * @brief copy constructor of bubble
+    * @param t: const& bubble<T, _NEW_SIZE>: the new bubble
+    */
     template <size_t _NEW_SIZE>
     bubble(const bubble<T, _NEW_SIZE> &t) noexcept : _size(t._size) {
         try {
@@ -39,24 +50,57 @@ public:
         }
     }
 
+    /**
+    * @brief insert function for bubble
+    * @param Args: the keys you want to insert. You can insert as many as you like
+    * bubble.insert(1, 2, 3, 4, ...)
+    */
     template <typename... Args>
     void insert(Args ...keys);
 
+    /**
+    * @brief remove function for bubble
+    * @param Args: the keys you want to remove. You can remove as many as you like
+    * bubble.remove(1, 2, 3, 4, ...)
+    */
     template <typename... Args>
     void remove(Args ...keys);
 
+    /**
+    * @brief search function for bubble
+    * @param key: the key you want to search
+    * @return true: if key exists in the bubble
+    * @return false: otherwise
+    */
     bool search(const T& key);
 
+    /**
+    * @brief size function for bubble
+    * @return size_t: the size of the bubble
+    */
     size_t size();
 
+    /**
+    * @brief empty function for bubble
+    * @return true: if bubble is empty
+    * @return false: otherwise
+    */
     bool empty();
 
+    /**
+    * @brief operator [] for bubble
+    * @param index: const& size_t, the passed index value
+    * @return std::vector<T>: the elements in-order of the passed index
+    */
     std::vector<T> operator[] (const size_t& index) const {
         assert(index < this->_size && index >= 0);
         if(this->list[index].second == std::nullopt) { return {this->list[index].first}; }
         return this->list[index].second.value().inorder();
     }
 
+    /**
+    * @brief operator << for bubble
+    */
     friend std::ostream & operator << (std::ostream &out, const bubble<T, _SIZE> &t){
         if(t._size == 0) { return out; }
         for(auto && x : t.list) {
@@ -130,12 +174,6 @@ inline void bubble<T, _SIZE>::insert(Args ...keys) {
 }
 
 
-/**
-* For now remove function can't remove key elements that exist on the list
-* It can only remove them if none of the nodes have a tree yet.
-* We have to find a way to make the tree rebalance itself and the root of the tree come on top
-* after a removal of a key element
-*/
 template <typename T, size_t _SIZE>
 template <typename... Args>
 void bubble<T, _SIZE>::remove(Args ...keys) {
@@ -219,4 +257,3 @@ bool bubble<T, _SIZE>::empty() {
 }
 
 #endif
-
