@@ -68,15 +68,15 @@ public:
             if(_NEW_SIZE != _SIZE) {
                 throw std::logic_error("Tried to copy two bubbles with different sizes");
             }
+            this->_size = t.size();
+            this->list = {};
+            for(size_t i = 0; i<this->_size; i++){
+                this->list.push_back(std::pair<T, std::optional<avl_tree<T>>>(t.get_key(i), t.get_tree(i)));
+            }
         }
         catch (std::logic_error &e) {
             std::cerr << e.what() << '\n';
             return *(this);
-        }
-        this->_size = t.size();
-        this->list = {};
-        for(size_t i = 0; i<this->_size; i++){
-            this->list.push_back(std::pair<T, std::optional<avl_tree<T>>>(t.get_key(i), t.get_tree(i)));
         }
         return *(this);
     }
