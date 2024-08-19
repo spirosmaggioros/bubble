@@ -35,9 +35,8 @@ int main() {
 The code is licenced under the [MIT Licence](http://opensource.org/licenses/MIT):
 Copyright &copy; 2024 Spiros Maggioros
 
-Permission is granted, free of charge, to any person obtaining a copy of this software and associated
-documentation files. \
-Please cite the creators if you want to include this code to a project or a product
+Please cite the creators if you want to include this code to a project or a product using the
+bibitex bellow or using "Cite this repository" at "about" on the right view panel.
 ```
 @software{Spiros_bubble_A_new_2024,
 author = {Spiros, Maggioros},
