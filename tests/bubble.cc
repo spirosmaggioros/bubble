@@ -194,3 +194,34 @@ TEST_CASE("Testing removing element that does not exist") {
         REQUIRE(b[i] == b2[i]);
     }
 }
+
+TEST_CASE("Testing iterator [1]") {
+    bubble<int, 5> b;
+    b.insert(-10, 20, 50, 60, 100);
+    std::vector check {-10, 20, 50, 60, 100};
+    int counter {0};
+    for(auto it = b.begin(); it != b.end(); it++){
+        REQUIRE((*it).first == check[counter++]);
+    }
+}
+
+TEST_CASE("Testing iterator [2]"){
+    bubble<int, 5> b;
+    b.insert(-10, 20, 50, 60, 100);
+    std::vector check {100, 60, 50, 20, -10};
+    auto it = b.end();
+    it--;
+    int counter {0};
+    for(; it != b.begin(); it--){
+        REQUIRE((*it).first == check[counter++]);
+    }
+
+    bubble<std::string, 5> b2;
+    b2.insert("a", "g", "l", "t", "y");
+    b2.insert("g", "hello", "coconut", "apple");
+    std::vector check2 {"a", "g", "l", "t", "y"};
+    counter = 0;
+    for(auto it2 = b2.begin(); it2 != b2.end(); it2++){
+        REQUIRE((*it2).first == check2[counter++]);
+    }
+}

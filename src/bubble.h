@@ -120,6 +120,23 @@ public:
     avl_tree<T> get_tree(const size_t& index) const;
 
     /**
+    * @brief iterator class for bubble container
+    */
+    class iterator;
+
+    /**
+    * @brief begin iterator
+    * @return an iterator to the beginning of the list
+    */
+    iterator begin() noexcept { return iterator(this->list, 0); }
+
+    /**
+    * @brief end iterator
+    * @return an iterator to the ending of the list
+    */
+    iterator end() noexcept { return iterator(this->list, _SIZE); }
+
+    /**
     * @brief size function for bubble
     * @return size_t: the size of the bubble
     */
@@ -322,6 +339,105 @@ bool bubble<T, _SIZE>::empty() const {
 template <typename T, size_t _SIZE>
 size_t bubble<T, _SIZE>::array_size() const {
     return _SIZE;
+}
+
+template <typename T, size_t _SIZE>
+class bubble<T, _SIZE>::iterator {
+private:
+    using bubble = std::vector<std::pair<T, std::optional<avl_tree<T>>>>;
+    bubble b;
+    int64_t index;
+    size_t _size;
+
+public:
+    explicit iterator(const bubble& v, const size_t& _index) noexcept : b(v), index(_index) {}
+
+    iterator& operator=(bubble current) {
+        this->_size = current.size();
+        this->b= {};
+        for(size_t i = 0; i<this->_size; i++){
+            this->b.push_back(std::pair<T, std::optional<avl_tree<T>>>(current.get_key(i), current.get_tree(i)));
+        }
+        return *(this);
+    }
+
+    iterator& operator++() {
+        if(this->index < _SIZE) {
+            this->index++;
+        }
+        return *(this);
+    }
+
+    iterator operator++(int) {
+        iterator it = *(this);
+        ++*(this);
+        return it;
+    }
+
+    iterator& operator--() {
+        if(this->index > 0) {
+            this->index--;
+        }
+        return *(this);
+    }
+
+    iterator operator--(int) {
+        iterator it = *(this);
+        --*(this);
+        return it;
+    }
+
+    bool operator!=(const iterator &it) {
+        return it.b[it.index].first != this->b[this->index].first;
+    }
+
+    bool operator==(const iterator &it) {
+        return it.b[it.index].first == this->b[this->index].first;
+    }
+
+    std::pair<T, std::optional<avl_tree<T>>>& operator*() {
+        return this->b[this->index];
+    }
+};
+
+/**
+* @brief Non member functions
+*/
+template <typename T>
+bool operator==(const std::pair<T, std::optional<avl_tree<T>>> &a,
+                       const std::pair<T, std::optional<avl_tree<T>>> &b){
+                           return a.first == b.first;
+}
+
+template <typename T>
+bool operator!=(const std::pair<T, std::optional<avl_tree<T>>> &a,
+                       const std::pair<T, std::optional<avl_tree<T>>> &b){
+                           return a.first != b.first;
+}
+
+template <typename T>
+bool operator<(const std::pair<T, std::optional<avl_tree<T>>> &a,
+                    const std::pair<T, std::optional<avl_tree<T>>> &b){
+                        return a.first < b.first;
+}
+
+template <typename T>
+bool operator<=(const std::pair<T, std::optional<avl_tree<T>>> &a,
+                    const std::pair<T, std::optional<avl_tree<T>>> &b){
+                        return a.first <= b.first;
+}
+
+template <typename T>
+bool operator>(const std::pair<T, std::optional<avl_tree<T>>> &a,
+                    const std::pair<T, std::optional<avl_tree<T>>> &b){
+                        return a.first > b.first;
+}
+
+
+template <typename T>
+bool operator>=(const std::pair<T, std::optional<avl_tree<T>>> &a,
+                    const std::pair<T, std::optional<avl_tree<T>>> &b){
+                        return a.first >= b.first;
 }
 
 #endif
