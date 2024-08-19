@@ -1,4 +1,5 @@
 ### bubble: A new data structure based on the idea of fibonacci heaps
+![bubble](assets/bubble.jpg)
 
 ## Overiew
 bubble is a data structure that uses an array and avl trees to store elements. You have to define
@@ -57,3 +58,8 @@ cmake ..
 make
 cd tests && ./runUnitTests
 ```
+
+## Contribute
+General contributions are always welcome and we definetely need more people working on this to make
+sure to have no bugs and manage to have the fastest implementation that we can. In order to contribute just
+create a pull request explaining your addition or fix as clearly as you can.
