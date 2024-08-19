@@ -31,7 +31,7 @@ public:
    * @brief Copy constructor for avl tree class
    * @param a the tree we want to copy
    */
-  explicit avl_tree(const avl_tree &a) : root(a.root), _size(a._size) {
+  explicit avl_tree(const avl_tree &a) noexcept : root(a.root), _size(a._size) {
 
 
   }
@@ -41,7 +41,7 @@ public:
    * @param a the tree we want to copy
    * @return avl_tree&
    */
-  avl_tree &operator=(const avl_tree &a) {
+  avl_tree &operator=(const avl_tree &a) noexcept {
     root = a.root;
     _size = a._size;
     return *this;
@@ -77,7 +77,7 @@ public:
   * @return T: the root value
   * Created for bubble.h container
   */
-  T get_root() { return this->root->info; }
+  T get_root() const { return this->root->info; }
 
   /**
    *@brief search function.
@@ -113,7 +113,7 @@ public:
    *
    * @return size_t the size of the tree
    */
-  size_t size() { return _size; }
+  size_t size() const { return _size; }
   /**
    *@brief remove function.
    *@param key: key to be removed.
@@ -450,4 +450,3 @@ public:
 };
 
 #endif
-
