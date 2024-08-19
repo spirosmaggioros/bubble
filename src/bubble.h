@@ -160,10 +160,10 @@ public:
     * @param index: const size_t&, the passed index value
     * @return std::vector<T>: the elements in-order of the passed index
     */
-    std::vector<T> operator[] (const size_t& index) const {
+    std::pair<T, std::vector<T>> operator[] (const size_t& index) const {
         assert(index < _SIZE && index >= 0);
-        if(this->list[index].second == std::nullopt) { return {this->list[index].first}; }
-        return this->list[index].second.value().inorder();
+        if(this->list[index].second == std::nullopt) { return {std::make_pair(this->list[index].first, std::vector<T>())}; }
+        return std::make_pair(this->list[index].first, this->list[index].second.value().inorder());
     }
 
     /**
@@ -406,30 +406,96 @@ public:
 template <typename T>
 bool operator==(const std::pair<T, std::optional<avl_tree<T>>> &a,
                        const std::pair<T, std::optional<avl_tree<T>>> &b){
-                           return a.first == b.first;
+                           if(a.first == b.first){
+                               if(a.second == std::nullopt && b.second == std::nullopt){
+                                   return true;
+                               }
+                               else if((a.second != std::nullopt && b.second == std::nullopt) || (a.second == std::nullopt && b.second != std::nullopt)){
+                                   return false;
+                               }
+                               else{
+                                   std::vector v1 { a.second.value().inorder() };
+                                   std::vector v2 { b.second.value().inorder() };
+                                   return v1 == v2;
+                               }
+                           }
+                           return false;
 }
 
 template <typename T>
 bool operator!=(const std::pair<T, std::optional<avl_tree<T>>> &a,
                        const std::pair<T, std::optional<avl_tree<T>>> &b){
-                           return a.first != b.first;
+                           if(a.first != b.first) { return true; }
+                           else {
+                               if(a.second == std::nullopt && b.second == std::nullopt) {
+                                   return false;
+                               }
+                               else if((a.second == std::nullopt && b.second != std::nullopt) || (a.second != std::nullopt && b.second == std::nullopt)){
+                                   return true;
+                               }
+                               else{
+                                   std::vector v1 { a.second.value().inorder() };
+                                   std::vector v2 { b.second.value().inorder() };
+                                   return v1 != v2;
+                               }
+                           }
+                           return false;
 }
 
 template <typename T>
 bool operator<(const std::pair<T, std::optional<avl_tree<T>>> &a,
                     const std::pair<T, std::optional<avl_tree<T>>> &b){
+                        if(a.first == b.first) {
+                            if(a.second == std::nullopt && b.second != std::nullopt){
+                                return true;
+                            }
+                            else if(a.second != std::nullopt && b.second == std::nullopt){
+                                return false;
+                            }
+                            else{
+                                std::vector v1 { a.second.value().inorder() };
+                                std::vector v2 { b.second.value().inorder() };
+                                return v1 < v2;
+                            }
+                        }
                         return a.first < b.first;
 }
 
 template <typename T>
 bool operator<=(const std::pair<T, std::optional<avl_tree<T>>> &a,
                     const std::pair<T, std::optional<avl_tree<T>>> &b){
+                        if(a.first == b.first) {
+                            if(a.second == std::nullopt && b.second != std::nullopt){
+                                return true;
+                            }
+                            else if(a.second != std::nullopt && b.second == std::nullopt){
+                                return false;
+                            }
+                            else{
+                                std::vector v1 { a.second.value().inorder() };
+                                std::vector v2 { b.second.value().inorder() };
+                                return v1 <= v2;
+                            }
+                        }
                         return a.first <= b.first;
 }
 
 template <typename T>
 bool operator>(const std::pair<T, std::optional<avl_tree<T>>> &a,
                     const std::pair<T, std::optional<avl_tree<T>>> &b){
+                        if(a.first == b.first) {
+                            if(a.second == std::nullopt && b.second != std::nullopt){
+                                return false;
+                            }
+                            else if(a.second != std::nullopt && b.second == std::nullopt){
+                                return true;
+                            }
+                            else{
+                                std::vector v1 { a.second.value().inorder() };
+                                std::vector v2 { b.second.value().inorder() };
+                                return v1 > v2;
+                            }
+                        }
                         return a.first > b.first;
 }
 
@@ -437,6 +503,19 @@ bool operator>(const std::pair<T, std::optional<avl_tree<T>>> &a,
 template <typename T>
 bool operator>=(const std::pair<T, std::optional<avl_tree<T>>> &a,
                     const std::pair<T, std::optional<avl_tree<T>>> &b){
+                        if(a.first == b.first) {
+                            if(a.second == std::nullopt && b.second != std::nullopt){
+                                return false;
+                            }
+                            else if(a.second != std::nullopt && b.second == std::nullopt){
+                                return true;
+                            }
+                            else{
+                                std::vector v1 { a.second.value().inorder() };
+                                std::vector v2 { b.second.value().inorder() };
+                                return v1 >= v2;
+                            }
+                        }
                         return a.first >= b.first;
 }
 

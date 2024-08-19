@@ -7,11 +7,11 @@ TEST_CASE("Testing insertion for bubble class") {
     bubble<int, 5> b;
     b.insert(-10, 0, 10, 40, 50);
     REQUIRE(b.size() == 5);
-    REQUIRE(b[0][0] == -10);
-    REQUIRE(b[1][0] == 0);
-    REQUIRE(b[2][0] == 10);
-    REQUIRE(b[3][0] == 40);
-    REQUIRE(b[4][0] == 50);
+    REQUIRE(b[0].first == -10);
+    REQUIRE(b[1].first == 0);
+    REQUIRE(b[2].first == 10);
+    REQUIRE(b[3].first == 40);
+    REQUIRE(b[4].first == 50);
 
     b.insert(-15, -20, -50, -60, -100, -150, -200);
     REQUIRE(b.search(-15) == true);
@@ -67,13 +67,9 @@ TEST_CASE("Testing removing for bubble class") {
     b2.insert(-50, -20, 0, 20, 50);
     b2.insert(35, 30, 38, 36, 45, 22);
     b2.remove(20);
-    std::vector v { b2[3] };
-    std::vector check {22, 30, 36, 38, 45};
-    REQUIRE(v == check);
+    REQUIRE(b2[3].first == 35);
     b2.remove(35);
-    v = b2[3];
-    check = {22, 30, 38, 45};
-    REQUIRE(v == check);
+    REQUIRE(b2[3].first == 36);
 }
 
 TEST_CASE("Testing size for bubble class") {
@@ -224,4 +220,99 @@ TEST_CASE("Testing iterator [2]"){
     for(auto it2 = b2.begin(); it2 != b2.end(); it2++){
         REQUIRE((*it2).first == check2[counter++]);
     }
+}
+
+TEST_CASE("Testing operator == for bubble") {
+    bubble<int, 5> b1, b2;
+    b1.insert(-10, 20, 50, 60, 100);
+    b1.insert(-15, 25, 35, 45, 55);
+
+    b2.insert(-10, 20, 50, 60, 100);
+    b2.insert(-15, 25, 35, 45, 55);
+
+    for(int i = 0; i<b1.array_size(); i++){
+        REQUIRE(b1[i] == b2[i]);
+        REQUIRE(b1[i] >= b2[i]);
+        REQUIRE(b1[i] <= b2[i]);
+    }
+}
+
+TEST_CASE("Testing operator != for bubble") {
+    bubble<int, 5> b1, b2;
+    b1.insert(-10, 20, 50, 60, 100);
+    b1.insert(-15, 25, 35, 45, 55);
+
+    b2.insert(-12, 20, 50, 60, 100);
+    b2.insert(-15, 25, 35, 45, 55);
+
+    REQUIRE(b2[0] != b1[0]);
+}
+
+TEST_CASE("Testing operator > for bubble") {
+    bubble<int, 5> b1, b2;
+    b1.insert(-10, 20, 50, 60, 100);
+    b1.insert(-15, 25, 35, 45, 55);
+
+    b2.insert(-12, 25, 50, 60, 100);
+    b2.insert(-15, 22, 35, 45, 55);
+
+    REQUIRE(b1[1] < b2[1]);
+    REQUIRE(b1[1] <= b2[1]);
+
+    REQUIRE(b1[4] > b2[1]);
+}
+
+TEST_CASE("Testing operator < for bubble") {
+    bubble<int, 5> b1, b2;
+    b1.insert(-10, 10, 50, 100, 200);
+    b1.insert(-100, -50, -45, -55, -60);
+
+    b2.insert(-10, 10, 50, 100, 200);
+    b2.insert(-20, -25, -15, -11, -12);
+
+    REQUIRE(b1[0] < b2[0]);
+    REQUIRE(b1[0] <= b2[0]);
+
+    bubble<int, 5> w1, w2;
+    w1.insert(-10, 20, 30, 50, 60);
+    w2.insert(-14, -20, 50, 60, 100);
+
+    REQUIRE(w2[0] < w1[0]);
+    REQUIRE(w1[3] < w2[3]);
+}
+
+TEST_CASE("Testing operators [1]"){
+    bubble<int, 3> b1, b2;
+    b1.insert(-10, 20, 30);
+    b2.insert(-10, 20, 30);
+
+    b1.insert(-15, -20, -25);
+    REQUIRE(b1[0] > b2[0]);
+    REQUIRE(b1[0] >= b2[0]);
+
+
+    bubble<int, 3> w1, w2;
+    w1.insert(-10, 20, 30);
+    w2.insert(-10, 20, 30);
+
+    w1.insert(-15, -20, -25);
+    REQUIRE(w2[0] < w1[0]);
+    REQUIRE(w2[0] <= w1[0]);
+}
+
+
+TEST_CASE("Testint operators [2]") {
+    bubble<int, 3> b1, b2;
+    b1.insert(-10, 10, 20);
+    b2.insert(-10, 10, 20);
+
+    b1.insert(-15, -20, -25, -30);
+    b2.insert(-15, -20, -25, -30);
+
+    REQUIRE(b1[0] == b2[0]);
+    REQUIRE(!(b1[0] != b2[0]));
+    REQUIRE(b1[0] <= b2[0]);
+    REQUIRE(b1[0] >= b2[0]);
+    REQUIRE(!(b1[0] > b2[0]));
+    REQUIRE(!(b1[0] < b2[0]));
 }
