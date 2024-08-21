@@ -11,7 +11,7 @@ Note that you can put any binary tree structure you like instead of an avl tree,
 You can check more about the container at the [tutorial](/tutorial) folder
 
 ## Complexity
-The time complexity of insertion, deletion and searching of an element is $O(logn \cdot logm)$ where n is the
+The time complexity of insertion, deletion and searching of an element is $O(logn + logm) == O(log(n+m))$ where n is the
 initial array size and m is the size of the avl tree that the key is going to be.
 
 ## Example
