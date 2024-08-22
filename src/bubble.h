@@ -1,7 +1,7 @@
 /**
 * @brief Implementation of the bubble data structure, a data structure that is highly influenced
 * from the fibonacci heap structure. Bubble uses an array and avl_trees to store elements and
-* fastly retreieve or insert new ones. Insertion/removal time complexity is O(logn*logm) where n
+* fastly retreieve or insert new ones. Insertion/removal time complexity is O(logn + logm) == O(log(n + m)) where n
 * is the size of the initial array(or the input bubble size) and m is the number of nodes at the index
 * that the bubble is going to search
 */
